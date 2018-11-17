@@ -5,7 +5,8 @@ import loginService from '../services/login'
 import AddBlogForm from './AddBlogForm'
 import LoginForm from './LoginForm'
 import UserList from './UserList'
-import User from './User'
+import UserDetails from './UserDetails'
+import BlogDetails from './BlogDetails'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class App extends React.Component {
@@ -117,7 +118,8 @@ class App extends React.Component {
             <div>
               <UserList />
             </div>} />
-          <Route exact path="/users/:id" render={({ match }) => <User userId={match.params.id} />} />
+          <Route exact path="/users/:id" render={({ match }) => <UserDetails userId={match.params.id} />} />
+          <Route exact path="/blogs/:id" render={({ match }) => <BlogDetails blogId={match.params.id} />} />
           <Route exact path="/" render={() => {
             return this.state.user ? blogList() : ''
           }} />

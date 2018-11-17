@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { initUsers } from '../reducers/usersReducer'
 
-class User extends React.Component {
+class UserDetails extends React.Component {
   componentDidMount() {
     this.props.initUsers()
   }
@@ -44,6 +44,6 @@ const mapDispatchToProps = {
   initUsers
 }
 
-const ConnectedUser = connect(mapStateToProps, mapDispatchToProps)(User)
+const ConnectedUser = connect(mapStateToProps, mapDispatchToProps)(UserDetails)
 
 export default ConnectedUser
