@@ -5,6 +5,7 @@ import loginService from '../services/login'
 import AddBlogForm from './AddBlogForm'
 import LoginForm from './LoginForm'
 import UserList from './UserList'
+import User from './User'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class App extends React.Component {
@@ -112,12 +113,15 @@ class App extends React.Component {
       <Router>
         <div>
           {this.state.user ? userInfo() : loginForm()}
-          <Route path="/users" render={() => <div>
-            <UserList />
-          </div>} />
+          <Route exact path="/users" render={() =>
+            <div>
+              <UserList />
+            </div>} />
+          <Route exact path="/users/:id" render={({ match }) => <User userId={match.params.id} />} />
           <Route exact path="/" render={() => {
             return this.state.user ? blogList() : ''
           }} />
+
         </div>
       </Router>
     )

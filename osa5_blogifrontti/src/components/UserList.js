@@ -8,6 +8,10 @@ class UserList extends React.Component {
     this.props.initUsers()
   }
 
+  getLink(user) {
+    return '/users/' + user.id
+  }
+
   render() {
     return (
       <div>
@@ -19,8 +23,8 @@ class UserList extends React.Component {
             </tr>
             {this.props.users.map(user => (
               <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.blogs.reduce((sum, b) => (1 + sum), 0)}</td>
+                <td><a href={this.getLink(user)}>{user.name}</a></td>
+                <td>{user.blogs.length}</td>
               </tr>
             ))}
           </tbody>
