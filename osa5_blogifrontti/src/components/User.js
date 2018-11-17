@@ -27,7 +27,7 @@ class User extends React.Component {
         <h2>{user ? user.name : ''}</h2>
         <h3>Added blogs</h3>
         <ul>
-          {blogs.map(b => <li>{b.title}</li>)}
+          {blogs.map(b => <li key={b._id}>{b.title}</li>)}
         </ul>
       </div >
     )
