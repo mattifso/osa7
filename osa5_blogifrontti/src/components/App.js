@@ -7,7 +7,7 @@ import LoginForm from './LoginForm'
 import UserList from './UserList'
 import UserDetails from './UserDetails'
 import BlogDetails from './BlogDetails'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 class App extends React.Component {
   constructor(props) {
@@ -94,11 +94,13 @@ class App extends React.Component {
 
     const userInfo = () => (
       <div>
-        <h2>blogs</h2>
-        <p>
-          {this.state.userData.name} logged in <button onClick={this.logoutHandler}>logout</button>
-        </p>
-      </div>
+        <h2>blog app</h2>
+        <div style={{border: 1, borderStyle: 'solid', borderColor: 'red', padding: 15, width: '25em'}}>
+          <Link to="/">blogs</Link> &nbsp;
+          <Link to="/users">users</Link> &nbsp;
+          <i>{this.state.userData.name} logged in</i> <button onClick={this.logoutHandler}>logout</button>
+        </div>
+      </div >
     )
 
     const blogList = () => (
