@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { initBlogs } from '../reducers/blogsReducer'
+import { initBlogs, addComment } from '../reducers/blogsReducer'
 
 class BlogDetails extends React.Component {
   componentDidMount() {
@@ -15,12 +15,25 @@ class BlogDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: props.userId
+      userId: props.userId,
+      comment: ''
     }
   }
 
+  addComment = (event) => {
+    this.props.addComment(this.props.blogId, this.state.comment)
+    this.setState({ comment: '' })
+  }
+
+  handleCommentChange = (event) => {
+    event.preventDefault()
+    this.setState({ comment: event.target.value })
+  }
+
+  findBlog = () => (this.props.blogs.find(b => b._id === this.props.blogId))
+
   render() {
-    const blog = this.props.blogs.find(b => b._id === this.props.blogId)
+    const blog = this.findBlog()
     return (
       blog ?
         <div>
@@ -30,9 +43,17 @@ class BlogDetails extends React.Component {
           <div>added by {blog.user.name}</div>
           <div>
             Comments:
-          <ul>
-            {blog.comments.map(c => <li>{c}</li>)}
-          </ul>
+            <div>
+              <form onSubmit={this.addComment}>
+                <div><input value={this.state.comment} onChange={this.handleCommentChange} /></div>
+                <button>add comment</button>
+              </form>
+            </div>
+            <ul>
+              {blog.comments.map((c, index) => {
+                return (<li key={index}>{c}</li>)
+              })}
+            </ul>
           </div>
         </div>
         : ''
@@ -47,7 +68,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  initBlogs
+  initBlogs,
+  addComment
 }
 
 const ConnectedBlogDetails = connect(mapStateToProps, mapDispatchToProps)(BlogDetails)

@@ -21,9 +21,22 @@ const create = async (newObject) => {
   }
 }
 
+const addComment = async (blogId, comment) => {
+  const config = {
+    headers: { 'Authorization': token }
+  }
+
+  try {
+    const url = [baseUrl, '/', blogId, '/', 'comments'].join('')
+    const response = await axios.post(url, { comment: comment }, config)
+    return response.data
+  } catch (error) {
+    console.log('error occurred', error)
+  }
+}
 
 const setToken = (newToken) => {
   token = `Bearer ${newToken}`
 }
 
-export default { getAll, setToken, create }
+export default { getAll, setToken, create, addComment }
