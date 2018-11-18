@@ -55,7 +55,36 @@ blogsRouter.post('/', async (request, response) => {
 
     response.status(201).json(Blog.format(blog))
   } catch (exception) {
-    if (exception.name === 'JsonWebTokenError' ) {
+    if (exception.name === 'JsonWebTokenError') {
+      response.status(401).json({ error: exception.message })
+    } else {
+      console.log(exception)
+      response.status(500).json({ error: 'internal error' })
+    }
+  }
+})
+
+blogsRouter.post('/:id/comments', async (request, response) => {
+  try {
+    const token = getTokenFrom(request)
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+
+    if (!token || !decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid' })
+    }
+
+    const body = request.body
+    if (body.comment === undefined) {
+      return response.status(400).json({ error: 'invalid comment content' })
+    }
+
+    const blog = await Blog.findById(request.params.id)
+    blog.comments.push(request.body.comment)
+    await blog.save()
+
+    response.status(201).json({ 'comment': body.comment })
+  } catch (exception) {
+    if (exception.name === 'JsonWebTokenError') {
       response.status(401).json({ error: exception.message })
     } else {
       console.log(exception)

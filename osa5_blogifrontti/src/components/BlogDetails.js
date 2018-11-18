@@ -23,13 +23,19 @@ class BlogDetails extends React.Component {
     const blog = this.props.blogs.find(b => b._id === this.props.blogId)
     return (
       blog ?
-      <div>
-        <h2>{blog.title}</h2>
-        <div><a href={blog.url}>{blog.url}</a></div>
-        <div>likes: {blog.likes}</div>
-        <div>added by {blog.user.name}</div>
-      </div>
-      : ''
+        <div>
+          <h2>{blog.title}</h2>
+          <div><a href={blog.url}>{blog.url}</a></div>
+          <div>likes: {blog.likes}</div>
+          <div>added by {blog.user.name}</div>
+          <div>
+            Comments:
+          <ul>
+            {blog.comments.map(c => <li>{c}</li>)}
+          </ul>
+          </div>
+        </div>
+        : ''
     )
   }
 }

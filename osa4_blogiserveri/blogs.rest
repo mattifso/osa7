@@ -61,3 +61,15 @@ Content-Type: application/json
     "username": "mongo",
     "password": "sekret"
 }
+
+
+### comment
+
+
+POST {{server}}/api/blogs/5bc7ad5d6a5d0e33864a5295/comments HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbmdvIiwiaWQiOiI1YmM3NTQwNmVkNzcyYTJhMGRlM2QyMTQiLCJpYXQiOjE1NDI1NDA1NTJ9.Lg5yOykY5VVw9OIeVdXCnu2MaID-1URowOMyh_h95ns
+
+{
+    "comment": "nice article"
+}
