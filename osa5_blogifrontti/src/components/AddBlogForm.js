@@ -1,11 +1,8 @@
 import React from 'react'
-import blogService from '../services/blogs'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { addBlog } from '../reducers/blogsReducer'
 
 class AddBlogForm extends React.Component {
-  static propTypes = {
-    addToBlogList: PropTypes.func.isRequired
-  }
 
   constructor(props) {
     super(props);
@@ -13,21 +10,17 @@ class AddBlogForm extends React.Component {
       title: '',
       author: '',
       url: '',
-      addToBlogList: props.addToBlogList
     }
   }
 
   createBlogEntry = () => {
     return async (event) => {
       event.preventDefault()
-      const result = await blogService.create({
+      this.props.addBlog({
         title: this.state.title,
         author: this.state.author,
         url: this.state.url
       })
-      console.log('created with result ', result)
-      this.state.addToBlogList(result)
-      return result
     }
   }
 
@@ -72,4 +65,16 @@ class AddBlogForm extends React.Component {
   }
 }
 
-export default AddBlogForm
+const mapStateToProps = (state) => {
+  return {
+    blogs: state.blogs
+  }
+}
+
+const mapDispatchToProps = {
+  addBlog
+}
+
+const ConnectedAddBlogForm = connect(mapStateToProps, mapDispatchToProps)(AddBlogForm)
+
+export default ConnectedAddBlogForm

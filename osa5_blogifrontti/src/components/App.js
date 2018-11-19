@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Blog from './Blog'
 import blogService from '../services/blogs'
 import loginService from '../services/login'
@@ -7,13 +9,12 @@ import LoginForm from './LoginForm'
 import UserList from './UserList'
 import UserDetails from './UserDetails'
 import BlogDetails from './BlogDetails'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { initBlogs } from '../reducers/blogsReducer'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      blogs: [],
       username: '',
       password: '',
       userData: null,
@@ -22,9 +23,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    blogService.getAll().then(blogs =>
-      this.setState({ blogs })
-    )
+    this.props.initBlogs()
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const userData = JSON.parse(loggedUserJSON)
@@ -65,10 +64,6 @@ class App extends React.Component {
     this.setState({ userData: null, user: null })
   }
 
-  addToBlogList = (newBlog) => {
-    this.setState({ blogs: this.state.blogs.concat(newBlog) })
-  }
-
   render() {
     const loginForm = () => {
       const hideWhenVisible = { display: this.state.loginVisible ? 'none' : '' }
@@ -95,7 +90,7 @@ class App extends React.Component {
     const userInfo = () => (
       <div>
         <h2>blog app</h2>
-        <div style={{border: 1, borderStyle: 'solid', borderColor: 'red', padding: 15, width: '25em'}}>
+        <div style={{ border: 1, borderStyle: 'solid', borderColor: 'red', padding: 15, width: '25em' }}>
           <Link to="/">blogs</Link> &nbsp;
           <Link to="/users">users</Link> &nbsp;
           <i>{this.state.userData.name} logged in</i> <button onClick={this.logoutHandler}>logout</button>
@@ -105,8 +100,8 @@ class App extends React.Component {
 
     const blogList = () => (
       <div>
-        <AddBlogForm addToBlogList={this.addToBlogList} />
-        {this.state.blogs.map(blog => (
+        <AddBlogForm/>
+        {this.props.blogs.map(blog => (
           <Blog key={blog._id} blog={blog} />
         ))}
       </div>
@@ -132,4 +127,16 @@ class App extends React.Component {
   }
 }
 
-export default App
+const mapStateToProps = (state) => {
+  return {
+    blogs: state.blogs
+  }
+}
+
+const mapDispatchToProps = {
+  initBlogs
+}
+
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App)
+
+export default ConnectedApp

@@ -5,8 +5,18 @@ const reducer = (store = [], action) => {
     return action.data
   }
   if (action.type === 'ADD_COMMENT') {
-    const blog = store.find(b => b._id === action.data.blogId)
-    blog.comments.push(action.data.comment)
+    return store.map(b => {
+      if (b._id !== action.data.blogId) {
+        return b
+      }
+      return {
+        ...b,
+        comments: [...b.comments, action.data.comment]
+      }
+    })
+  }
+  if (action.type === 'ADD_BLOG') {
+    return [...store, action.data]
   }
   return store
 }
@@ -17,6 +27,16 @@ export const initBlogs = () => {
     dispatch({
       type: 'INIT_BLOGS',
       data: blogs
+    })
+  }
+}
+
+export const addBlog = (blog) => {
+  return async (dispatch) => {
+    const createdBlog = await blogService.create(blog)
+    dispatch({
+      type: 'ADD_BLOG',
+      data: createdBlog
     })
   }
 }
