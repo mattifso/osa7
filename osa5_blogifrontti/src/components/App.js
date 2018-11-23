@@ -2,37 +2,26 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Blog from './Blog'
-import blogService from '../services/blogs'
-import loginService from '../services/login'
 import AddBlogForm from './AddBlogForm'
 import LoginForm from './LoginForm'
 import UserList from './UserList'
 import UserDetails from './UserDetails'
 import BlogDetails from './BlogDetails'
 import { initBlogs } from '../reducers/blogsReducer'
+import { logIn, logOut, loadUserFromLocalStorage } from '../reducers/loggedInUserReducer'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       username: '',
-      password: '',
-      userData: null,
-      user: null
+      password: ''
     }
   }
 
   componentDidMount() {
     this.props.initBlogs()
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if (loggedUserJSON) {
-      const userData = JSON.parse(loggedUserJSON)
-      this.setState({
-        userData: userData,
-        user: userData.token  // koska tehtävänannossa käskettiin laittaa token useriin
-      })
-      blogService.setToken(userData.token)
-    }
+    this.props.loadUserFromLocalStorage()
   }
 
   handleLoginFieldChange = (event) => {
@@ -41,27 +30,7 @@ class App extends React.Component {
 
   login = async (event) => {
     event.preventDefault()
-    try {
-      const user = await loginService.login({
-        username: this.state.username,
-        password: this.state.password
-      })
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-      blogService.setToken(user.token)
-      this.setState({ username: '', password: '', userData: user, user: user.token }) // koska tehtävänannossa käskettiin laittaa token useriin
-    } catch (exception) {
-      this.setState({
-        error: 'invalid username or password',
-      })
-      setTimeout(() => {
-        this.setState({ error: null })
-      }, 5000)
-    }
-  }
-
-  logoutHandler = () => {
-    window.localStorage.removeItem('loggedBlogappUser')
-    this.setState({ userData: null, user: null })
+    this.props.logIn({ username: this.state.username, password: this.state.password })
   }
 
   render() {
@@ -93,24 +62,46 @@ class App extends React.Component {
         <div style={{ border: 1, borderStyle: 'solid', borderColor: 'red', padding: 15, width: '25em' }}>
           <Link to="/">blogs</Link> &nbsp;
           <Link to="/users">users</Link> &nbsp;
-          <i>{this.state.userData.name} logged in</i> <button onClick={this.logoutHandler}>logout</button>
+          <i>{this.props.loggedInUser.name} logged in</i> <button onClick={this.props.logOut}>logout</button>
         </div>
       </div >
     )
 
     const blogList = () => (
       <div>
-        <AddBlogForm/>
+        <AddBlogForm />
         {this.props.blogs.map(blog => (
           <Blog key={blog._id} blog={blog} />
         ))}
       </div>
     )
 
+    const showLoginOrUser = () => {
+      if (!isLoggedIn()) {
+        if (!this.props.loggedInUser) {
+          return loginForm()
+        }
+        if (this.props.loggedInUser.error === 'login_failed') {
+          return (
+            <div>
+              Invalid username or password
+              {loginForm()}
+            </div>)
+        }
+      }
+      if (isLoggedIn()) {
+        return userInfo()
+      }
+    }
+
+    const isLoggedIn = () => {
+      return (this.props.loggedInUser && !this.props.loggedInUser.error)
+    }
+
     return (
       <Router>
         <div>
-          {this.state.user ? userInfo() : loginForm()}
+          {showLoginOrUser()}
           <Route exact path="/users" render={() =>
             <div>
               <UserList />
@@ -118,7 +109,7 @@ class App extends React.Component {
           <Route exact path="/users/:id" render={({ match }) => <UserDetails userId={match.params.id} />} />
           <Route exact path="/blogs/:id" render={({ match }) => <BlogDetails blogId={match.params.id} />} />
           <Route exact path="/" render={() => {
-            return this.state.user ? blogList() : ''
+            return isLoggedIn() ? blogList() : ''
           }} />
 
         </div>
@@ -129,12 +120,16 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    blogs: state.blogs
+    blogs: state.blogs,
+    loggedInUser: state.loggedInUser
   }
 }
 
 const mapDispatchToProps = {
-  initBlogs
+  initBlogs,
+  loadUserFromLocalStorage,
+  logIn,
+  logOut
 }
 
 const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App)

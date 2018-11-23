@@ -9,7 +9,7 @@ class AddBlogForm extends React.Component {
     this.state = {
       title: '',
       author: '',
-      url: '',
+      url: ''
     }
   }
 
