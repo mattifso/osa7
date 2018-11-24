@@ -1,5 +1,6 @@
 import loginService from '../services/login'
 import blogService from '../services/blogs'
+import { notify } from './notificationReducer'
 
 const reducer = (store = null, action) => {
   if (action.type === 'USER_LOGGED_IN') {
@@ -10,12 +11,6 @@ const reducer = (store = null, action) => {
   }
   if (action.type === 'USER_LOADED') {
     return action.data
-  }
-  if (action.type === 'LOGIN_FAILED') {
-    return { error: 'login_failed' }
-  }
-  if (action.type === 'CLEAR_ERROR') {
-    return null 
   }
 
   return store
@@ -32,14 +27,7 @@ export const logIn = (credentials) => {
         data: user
       })
     } catch (error) {
-      dispatch({
-        type: 'LOGIN_FAILED'
-      })
-      setTimeout(() => {
-        dispatch({
-          type: 'CLEAR_ERROR'
-        })
-      }, 5000)
+      notify(true, 'Invalid username or password')(dispatch)
     }
   }
 }
@@ -51,6 +39,7 @@ export const logOut = () => {
     dispatch({
       type: 'USER_LOGGED_OUT'
     })
+    notify(false, `Logged out`)(dispatch)
   }
 }
 

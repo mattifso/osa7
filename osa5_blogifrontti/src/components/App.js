@@ -7,6 +7,7 @@ import LoginForm from './LoginForm'
 import UserList from './UserList'
 import UserDetails from './UserDetails'
 import BlogDetails from './BlogDetails'
+import Notification from './Notification'
 import { initBlogs } from '../reducers/blogsReducer'
 import { logIn, logOut, loadUserFromLocalStorage } from '../reducers/loggedInUserReducer'
 
@@ -76,42 +77,19 @@ class App extends React.Component {
       </div>
     )
 
-    const showLoginOrUser = () => {
-      if (!isLoggedIn()) {
-        if (!this.props.loggedInUser) {
-          return loginForm()
-        }
-        if (this.props.loggedInUser.error === 'login_failed') {
-          return (
-            <div>
-              Invalid username or password
-              {loginForm()}
-            </div>)
-        }
-      }
-      if (isLoggedIn()) {
-        return userInfo()
-      }
-    }
-
-    const isLoggedIn = () => {
-      return (this.props.loggedInUser && !this.props.loggedInUser.error)
-    }
-
     return (
       <Router>
         <div>
-          {showLoginOrUser()}
+          <Notification />
+          {!this.props.loggedInUser && loginForm()}
+          {this.props.loggedInUser && userInfo()}
           <Route exact path="/users" render={() =>
             <div>
               <UserList />
             </div>} />
           <Route exact path="/users/:id" render={({ match }) => <UserDetails userId={match.params.id} />} />
           <Route exact path="/blogs/:id" render={({ match }) => <BlogDetails blogId={match.params.id} />} />
-          <Route exact path="/" render={() => {
-            return isLoggedIn() ? blogList() : ''
-          }} />
-
+          <Route exact path="/" render={() => (this.props.loggedInUser && blogList())}/>
         </div>
       </Router>
     )

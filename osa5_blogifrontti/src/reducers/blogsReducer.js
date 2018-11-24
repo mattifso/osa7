@@ -1,4 +1,5 @@
 import blogService from '../services/blogs'
+import { notify } from './notificationReducer'
 
 const reducer = (store = [], action) => {
   if (action.type === 'INIT_BLOGS') {
@@ -38,6 +39,7 @@ export const addBlog = (blog) => {
       type: 'ADD_BLOG',
       data: createdBlog
     })
+    notify(false, `Added blog "${createdBlog.title}"`)(dispatch)
   }
 }
 
