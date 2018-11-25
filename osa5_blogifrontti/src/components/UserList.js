@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { initUsers } from '../reducers/usersReducer'
+import { Table } from 'react-bootstrap'
 
 class UserList extends React.Component {
 
@@ -15,7 +16,7 @@ class UserList extends React.Component {
   render() {
     return (
       <div>
-        <table>
+        <Table>
           <tbody>
             <tr>
               <th></th>
@@ -28,7 +29,7 @@ class UserList extends React.Component {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div >
     )
   }

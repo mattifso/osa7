@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addBlog } from '../reducers/blogsReducer'
+import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 
 class AddBlogForm extends React.Component {
 
@@ -32,36 +33,38 @@ class AddBlogForm extends React.Component {
     return (<div>
       <h2>create new</h2>
       <form onSubmit={this.createBlogEntry}>
-        <p>
-          title
-        <input
-            name="title"
-            type="text"
-            value={this.state.title}
-            onChange={this.handleAddBlogFieldChange}
-          />
-        </p>
-        <p>
-          author
-        <input
-            name="author"
-            type="text"
-            value={this.state.author}
-            onChange={this.handleAddBlogFieldChange}
-          />
-        </p>
-        <p>
-          url
-        <input
-            name="url"
-            type="text"
-            value={this.state.url}
-            onChange={this.handleAddBlogFieldChange}
-          />
-          <button onClick={this.createBlogEntry()}>create</button>
-        </p>
+        <FormGroup style={{ width: '25em' }}>
+          <p>
+            <ControlLabel>title</ControlLabel>
+            <FormControl
+              name="title"
+              type="text"
+              value={this.state.title}
+              onChange={this.handleAddBlogFieldChange}
+            />
+          </p>
+          <p>
+            <ControlLabel>author</ControlLabel>
+            <FormControl
+              name="author"
+              type="text"
+              value={this.state.author}
+              onChange={this.handleAddBlogFieldChange}
+            />
+          </p>
+          <p>
+            <ControlLabel>url</ControlLabel>
+            <FormControl
+              name="url"
+              type="text"
+              value={this.state.url}
+              onChange={this.handleAddBlogFieldChange}
+            />
+            <Button bsStyle="success" onClick={this.createBlogEntry()}>create</Button>
+          </p>
+        </FormGroup>
       </form>
-    </div>)
+    </div >)
   }
 }
 
