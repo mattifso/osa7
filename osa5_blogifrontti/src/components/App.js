@@ -44,7 +44,7 @@ class App extends React.Component {
       return (
         <div>
           <div style={hideWhenVisible}>
-            <button onClick={e => this.setState({ loginVisible: true })}>log in</button>
+            <button onClick={() => this.setState({ loginVisible: true })}>log in</button>
           </div>
           <div style={showWhenVisible}>
             <LoginForm
@@ -53,7 +53,7 @@ class App extends React.Component {
               handleChange={this.handleLoginFieldChange}
               handleSubmit={this.login}
             />
-            <button onClick={e => this.setState({ loginVisible: false })}>cancel</button>
+            <button onClick={() => this.setState({ loginVisible: false })}>cancel</button>
           </div>
         </div>
       )
@@ -65,7 +65,7 @@ class App extends React.Component {
           <Navbar.Header>
             <Navbar.Brand>
               blog app
-              </Navbar.Brand>
+            </Navbar.Brand>
           </Navbar.Header>
           <Nav>
             <LinkContainer to="/">

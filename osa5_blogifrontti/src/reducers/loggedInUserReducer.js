@@ -39,7 +39,7 @@ export const logOut = () => {
     dispatch({
       type: 'USER_LOGGED_OUT'
     })
-    notify(false, `Logged out`)(dispatch)
+    notify(false, 'Logged out')(dispatch)
   }
 }
 

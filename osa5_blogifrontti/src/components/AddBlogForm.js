@@ -6,7 +6,7 @@ import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 class AddBlogForm extends React.Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       title: '',
       author: '',

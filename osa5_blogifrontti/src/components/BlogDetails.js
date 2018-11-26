@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { initBlogs, addComment } from '../reducers/blogsReducer'
-import { bindActionCreators } from '../../../../../../Library/Caches/typescript/3.1/node_modules/@types/react-redux/node_modules/redux';
+import { bindActionCreators } from '../../../../../../Library/Caches/typescript/3.1/node_modules/@types/react-redux/node_modules/redux'
 
 class BlogDetails extends React.Component {
   componentDidMount() {
@@ -14,7 +14,7 @@ class BlogDetails extends React.Component {
   }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       userId: props.userId,
       comment: ''
@@ -69,7 +69,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, props) => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   initBlogs,
   addComment
 }, dispatch)

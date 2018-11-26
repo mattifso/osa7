@@ -10,7 +10,7 @@ const LoginForm = ({ handleSubmit, handleChange, username, password }) => {
         <FormGroup style={{ width: '25em' }}>
           <div>
             <ControlLabel>username</ControlLabel>
-          <FormControl
+            <FormControl
               name="username"
               type="text"
               value={username}
@@ -19,7 +19,7 @@ const LoginForm = ({ handleSubmit, handleChange, username, password }) => {
           </div>
           <div>
             <ControlLabel>password</ControlLabel>
-          <FormControl
+            <FormControl
               name="password"
               type="password"
               value={password}

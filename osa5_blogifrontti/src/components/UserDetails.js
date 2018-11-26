@@ -13,14 +13,14 @@ class UserDetails extends React.Component {
   }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       userId: props.userId
     }
   }
 
   render() {
-    const user = this.props.users.find(u => u.id === this.props.userId);
+    const user = this.props.users.find(u => u.id === this.props.userId)
     const blogs = user ? user.blogs : []
     return (
       <div>
