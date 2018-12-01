@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { initBlogs, addComment } from '../reducers/blogsReducer'
-import { bindActionCreators } from '../../../../../../Library/Caches/typescript/3.1/node_modules/@types/react-redux/node_modules/redux'
+import { bindActionCreators } from 'redux'
 
 class BlogDetails extends React.Component {
   componentDidMount() {
