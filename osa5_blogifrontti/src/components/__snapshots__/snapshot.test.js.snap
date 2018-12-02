@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notification snapshot tests error renders correctly 1`] = `
+<div
+  className="errorMessage"
+  style={
+    Object {
+      "border": 1,
+      "borderColor": "red",
+      "borderStyle": "solid",
+      "padding": 15,
+      "width": "25em",
+    }
+  }
+>
+  error
+</div>
+`;
+
+exports[`Notification snapshot tests success renders correctly 1`] = `
+<div
+  className="successMessage"
+  style={
+    Object {
+      "border": 1,
+      "borderColor": "green",
+      "borderStyle": "solid",
+      "padding": 15,
+      "width": "25em",
+    }
+  }
+>
+  hello
+</div>
+`;
