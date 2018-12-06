@@ -1,3 +1,8 @@
 language: node_js
 node_js:
-  - "10"
+- '10'
+deploy:
+  provider: heroku
+  api_key:
+    secure: FiJO7jOtZxB4XeVVnLaam9A3HqmTH2QXIYxlM7gfsvbSlITNg0NUFFo2I9OnlfOTwNJCnDY4TUVbbbb3QgzghMpNb8AAA2cCDGpy1+a+mCk0O1Rc3TeqrEXeyzPx2ofyfUEylVVgOY+J49SGI6ojJcSG9pgnkMkhsNaUaesrkz01kg6VXZ87wj/jqZ1pivYfPU12RJuVNbARg51QRf4QoXDUT4cTWbetyy5Zei2LVSdyC+TZaRetMdyP7A/MHJQLXBgd/5Q1dBE2G8G9/uCSv3o++gKZXgYwftMsQ2o7jfnSmN+h+7tHvjS+dgxy9EcjfLMUw1AEnYRQZ1MDokzTZa0ocPWP9ywp+UV1Qm2E37ii+PL4+uh/OgQIA0lPR42m2FJnGCBgsrxAP58ZvobZjGT3qw2wZlXOw4jsNe0/hRjhZaNYHKy2yXLzjbsMiq9dL4YJ5oey/7xHU0Lz14i5vomtxVOwzQ3wHhi9fPRN36zj1o2lBj/gMk6VSOdNir89IdiZqJXXr7rpw5uNYoAowGYLGYn8kg04AGY6HHR/hPW54sjaTepcrfwr3q0R8O4DR6zsiOdIJWFhAumHe1dwu3JBauH2VvKX29btIKa1JZyZamnZDLzf6lSc6Ar6uQMRnOutAga9d8JxAVoVCi6eSQLEa7wbY6LnDTh//eDm8FY=
+  app: floating-shore-79549
